@@ -35,7 +35,7 @@ constexpr const char *SYCL_PICALL_STREAM_NAME = "sycl.pi";
 // Data structure that captures the user code location information using the
 // builtin capabilities of the compiler
 struct code_location {
-#ifdef _MSC_VER
+#if defined(_MSC_VER) || defined(__APPLE_CC__)
   // Since MSVC does not support the required builtins, we
   // implement the version with "unknown"s which is handled
   // correctly by the instrumentation
