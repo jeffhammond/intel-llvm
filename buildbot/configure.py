@@ -48,6 +48,11 @@ def do_configure(args):
     if args.no_assertions:
         llvm_enable_assertions = 'OFF'
 
+    if args.no_libdevice:
+        llvm_external_projects = 'sycl;llvm-spirv;opencl-aot;xpti'
+    else:
+        llvm_external_projects = 'sycl;llvm-spirv;opencl-aot;xpti;libdevice'
+
     if args.docs:
         llvm_enable_doxygen = 'ON'
         llvm_enable_sphinx = 'ON'
@@ -63,7 +68,7 @@ def do_configure(args):
         "-DCMAKE_BUILD_TYPE={}".format(args.build_type),
         "-DLLVM_ENABLE_ASSERTIONS={}".format(llvm_enable_assertions),
         "-DLLVM_TARGETS_TO_BUILD={}".format(llvm_targets_to_build),
-        "-DLLVM_EXTERNAL_PROJECTS=sycl;llvm-spirv;opencl-aot;xpti;libdevice",
+        "-DLLVM_EXTERNAL_PROJECTS={}".format(llvm_external_projects),
         "-DLLVM_EXTERNAL_SYCL_SOURCE_DIR={}".format(sycl_dir),
         "-DLLVM_EXTERNAL_LLVM_SPIRV_SOURCE_DIR={}".format(spirv_dir),
         "-DLLVM_EXTERNAL_XPTI_SOURCE_DIR={}".format(xpti_dir),
@@ -133,6 +138,7 @@ def main():
                         metavar="BUILD_TYPE", default="Release", help="build type: Debug, Release")
     parser.add_argument("--cuda", action='store_true', help="switch from OpenCL to CUDA")
     parser.add_argument("--arm", action='store_true', help="build ARM support rather than x86")
+    parser.add_argument("--no-libdevice", action='store_true', help="do not build libdevice")
     parser.add_argument("--no-assertions", action='store_true', help="build without assertions")
     parser.add_argument("--docs", action='store_true', help="build Doxygen documentation")
     parser.add_argument("--system-ocl", action='store_true', help="use OpenCL deps from system (no download)")
