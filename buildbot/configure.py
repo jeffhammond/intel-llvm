@@ -21,7 +21,6 @@ def do_configure(args):
     ocl_header_dir = os.path.join(abs_obj_dir, "OpenCL-Headers")
     icd_loader_lib = os.path.join(abs_obj_dir, "OpenCL-ICD-Loader", "build")
     llvm_targets_to_build = 'X86'
-    llvm_enable_projects = 'clang;llvm-spirv;sycl;opencl-aot;xpti;libdevice'
     libclc_targets_to_build = ''
     sycl_build_pi_cuda = 'OFF'
     sycl_werror = 'ON'
@@ -49,8 +48,10 @@ def do_configure(args):
         llvm_enable_assertions = 'OFF'
 
     if args.no_libdevice:
+        llvm_enable_projects = 'clang;llvm-spirv;sycl;opencl-aot;xpti'
         llvm_external_projects = 'sycl;llvm-spirv;opencl-aot;xpti'
     else:
+        llvm_enable_projects = 'clang;llvm-spirv;sycl;opencl-aot;xpti;libdevice'
         llvm_external_projects = 'sycl;llvm-spirv;opencl-aot;xpti;libdevice'
 
     if args.docs:
