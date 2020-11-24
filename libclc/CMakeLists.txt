@@ -78,7 +78,7 @@ set(LIBCLC_TARGET_TO_TEST)
 foreach ( t ${LIBCLC_TEST_TARGETS_ALL})
 	if( ${t} IN_LIST LIBCLC_TARGETS_TO_BUILD )
 		list( APPEND LIBCLC_TARGET_TO_TEST "${t}" )
-	endif(t)
+	endif()
 endforeach(t)
 
 execute_process( COMMAND ${LLVM_CONFIG} "--system-libs"
